@@ -1,37 +1,9 @@
--Create venv
-python -m venv venv
-source venv/bin/activate
-windows
-.\venv\Scripts\activate
+### Medical Analyst With Human Loop
 
-pip install -r requirements.txt
+There are typically three different actions that you can do with a human-in-the-loop workflow:
 
-ollama run llama3.2:1b    
+Approve or Reject: Pause the graph before a critical step, such as an API call, to review and approve the action. If the action is rejected, you can prevent the graph from executing the step, and potentially take an alternative action. This pattern often involve routing the graph based on the human's input.
 
-loader=WebBaseLoader("https://www.investopedia.com/how-nvidia-makes-money-4799532")
+Edit Graph State: Pause the graph to review and edit the graph state. This is useful for correcting mistakes or updating the state with additional information. This pattern often involves updating the state with the human's input.
 
-langraph dev 
-
-#display graph
-from IPython.display import Image, display
-
-display(Image(graph.get_graph().draw_mermaid_png()))
-# load llm
-
-import os
-from dotenv import load_dotenv
-load_dotenv()
-
-from langchain_groq import ChatGroq
-from langchain_openai import ChatOpenAI
-
-#os.environ["OPENAI_API_KEY"]=os.getenv("OPENAI_API_KEY")
-os.environ["GROQ_API_KEY"]=os.getenv("GROQ_API_KEY")
-
-
-llm=ChatGroq(model="qwen-2.5-32b")
-#llm = ChatOpenAI(model="gpt-4o")
-result=llm.invoke("Hello")
-result
-
-
+Get Input: Explicitly request human input at a particular step in the graph. This is useful for collecting additional information or context to inform the agent's decision-making process or for supporting multi-turn conversations.
